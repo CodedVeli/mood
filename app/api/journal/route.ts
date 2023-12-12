@@ -1,3 +1,4 @@
+import { analyse } from "@/utils/ai";
 import { getUserByClerkId } from "@/utils/auth";
 import { prisma } from "@/utils/db";
 import { revalidatePath } from "next/cache";
@@ -12,9 +13,25 @@ export const POST = async () => {
 }
  })
 
+ const analysis = await analyse(entry.content)
+ await prisma.journalEntry.create({
+    data: {
+        entryId: entry.id,
+        ...analysis,
+        // sentiment: analysis.sentiment,
+        // sentimentScore: analysis.sentimentScore,
+        // subject: analysis.subject,
+        // summary: analysis.summary,
+        // mood: analysis.mood,
+        // color: analysis.color,
+    },
+
+    })
+
  // Revalidate the journal page after update
 
  revalidatePath("/api/journal")
 
  return NextResponse.json({data: entry})
 }
+
