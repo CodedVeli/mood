@@ -1,3 +1,4 @@
+import { analyse } from "@/utils/ai"
 import { getUserByClerkId } from "@/utils/auth"
 import { prisma } from "@/utils/db"
 import { NextResponse } from "next/server"
@@ -15,6 +16,18 @@ export const PATCH = async (request: Request, { params }) => {
             content,
         },
     })
+ const analyze =  await analyse(updateEntry.content)
+ const updated =   await prisma.analysis.upsert({
+        where: {
+            entryId: updateEntry.id,
+        },
+        create: {
+            entryId: updateEntry.id,
+            ...analyze,           
+        },
+        update: analyze,
+    })
+    console.log('update on the output:',updated)
 
     return NextResponse.json({ data: updateEntry })
 }

@@ -13,20 +13,29 @@ export const POST = async () => {
 }
  })
 
- const analysis = await analyse(entry.content)
- await prisma.journalEntry.create({
-    data: {
-        entryId: entry.id,
-        ...analysis,
-        // sentiment: analysis.sentiment,
-        // sentimentScore: analysis.sentimentScore,
-        // subject: analysis.subject,
-        // summary: analysis.summary,
-        // mood: analysis.mood,
-        // color: analysis.color,
-    },
+ // Assuming you have the following code to call the analyse function:
+const analysis = await analyse(entry.content);
 
-    })
+// Assuming 'analysis' is the output from the analyse function
+const output = analysis;
+
+// Save the data to the database using Prisma
+try {
+    const createdEntry = await prisma.analysis.create({
+        data: {
+            entryId: entry.id,
+           ...analyse(entry.content),
+        },
+    });
+
+    console.log("Entry created successfully:", createdEntry);
+} catch (error) {
+    console.error("Error creating entry:", error);
+    // Handle the error as needed
+}
+
+    console.log(analysis)
+
 
  // Revalidate the journal page after update
 

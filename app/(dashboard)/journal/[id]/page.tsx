@@ -8,6 +8,9 @@ const getEntry = async (id) => {
       where: {
         id: id,
       },
+      include: {
+        analysis: true,
+      },
     });
     return entry;
     
@@ -16,19 +19,15 @@ const getEntry = async (id) => {
 
 const EntryPage = async ({params}) => {
     const entry = await getEntry(params.id);
+    const { mood, summary, color, negative, rating, sentiment, sentimentScore } =  entry?.analysis || {};
+
     const analysisData = [
-      { name: 'Summary', value: 'summary'},
-      { name: 'Sentiment', value: 'sentiment'},
-      { name: 'Emotion', value: 'emotion'},
-      { name: 'Keywords', value: 'keywords'},
-      { name: 'Entities', value: 'entities'},
-      { name: 'Concepts', value: 'concepts'},
-      { name: 'Categories', value: 'categories'},
-      { name: 'Relations', value: 'relations'},
-      { name: 'Semantic Roles', value: 'semanticRoles'},
-      { name: 'Syntax', value: 'syntax'},
-      { name: 'Metadata', value: 'metadata'},
-      { name: 'Usage', value: 'usage'},
+     { name: "Mood", value: mood },
+      { name: "Summary", value: summary },
+      { name: "Rating", value: rating },
+      { name: "Sentiment", value: sentiment },
+      { name: "Sentiment Score", value: sentimentScore },
+      { name: "Negative", value: negative },
     ]
    
     return (
@@ -37,7 +36,7 @@ const EntryPage = async ({params}) => {
           <Editor entry={entry} />
           </div>
           <div className="border-l border-black">
-             <div className="bg-blue-300 px-6 py-10">
+             <div className=" px-6 py-10" style={{backgroundColor:color}}>
               <h2  className=" text-2xl">Analysis</h2>
               </div>
               <div>

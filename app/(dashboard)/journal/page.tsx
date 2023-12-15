@@ -15,9 +15,10 @@ const getEntries = async () => {
       orderBy: {
         createdAt: "desc",
       },
+     
     });
 
-    await analyse('Today has been quite challenging for me. As a software developer with expertise in the MERN stack, HTML, CSS, and JavaScript, including React Native, I faced persistent coding issues and unexpected bugs, leading to frustration and setbacks in my projects. To decompress from the stress, I turned to my passion for MMA, seeking comfort in its intensity, and added a dose of comedy to lighten the mood. Reflecting on the day, I pondered the inevitable highs and lows in both software development and life, reaffirming my determination to overcome challenges and pursue my entrepreneurial aspirations of building a startup. ')
+    // await analyse('Today has been quite challenging for me. As a software developer with expertise in the MERN stack, HTML, CSS, and JavaScript, including React Native, I faced persistent coding issues and unexpected bugs, leading to frustration and setbacks in my projects. To decompress from the stress, I turned to my passion for MMA, seeking comfort in its intensity, and added a dose of comedy to lighten the mood. Reflecting on the day, I pondered the inevitable highs and lows in both software development and life, reaffirming my determination to overcome challenges and pursue my entrepreneurial aspirations of building a startup. ')
 
     return entries;
 
